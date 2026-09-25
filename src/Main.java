@@ -50,16 +50,17 @@ void main()
             vMax = Math.max(vMax,dataSum[0][i]);
         }
 
+        int[] vMaxUp = new int[N];
+        System.arraycopy(dataSum[0], 0, vMaxUp, 0, N);
+
         for (int i = 1; i < N; i++)
         {
-            int vMaxHor = dataSum[i][0];
-            int vMaxVert = dataSum[0][1];
-            vMax = Math.max(vMaxHor, vMaxVert);
+            int vMaxLeft = dataSum[i][0];
             for (int j = 1; j < N; j++)
             {
+                 vMax = Math.max(vMaxLeft, vMaxUp[i]);
                  dataSum[i][j] = vMax + data[i][j];
-                 vMaxVert = Math.max(vMaxVert, dataSum[i][j]);
-                 vMax = Math.max(vMaxHor, vMaxVert);
+                 vMaxUp[i] = Math.max(vMaxUp[i], dataSum[i][j]);
             }
         }
 
