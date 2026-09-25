@@ -18,6 +18,7 @@ void main()
             k++;
         }
 
+        IO.println("---------------------------------------");
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
             {
@@ -35,30 +36,35 @@ void main()
         int[][] dataSum = new int[N][N];
         dataSum[0][0] = data[0][0];
 
-        for (int q = 1; q < N; q++)
+        int vMax = data[0][0];
+        for (int i = 1; i < N; i++)
         {
-            for (int i = 0; i < N; i++)
-                for (int j = 0; j < N; j++)
-                {
-                    if (i + j == q)
-                    {
-                        if (i == 0)
-                        {
-                            dataSum[i][j] = dataSum[i][j - 1] + data[i][j];
-                        }
-                        else if (j == 0)
-                        {
-                            dataSum[i][j] = dataSum[i - 1][j] + data[i][j];
-                        }
-                        else
-                        {
-                            int vMax = Math.max(dataSum[i - 1][j], dataSum[i][j - 1]);
-                            dataSum[i][j] = vMax + data[i][j];
-                        }
-                    }
-                }
+            dataSum[i][0] = vMax + data[i][0];
+            vMax = Math.max(vMax,dataSum[i][0]);
         }
 
+        vMax = data[0][0];
+        for (int i = 1; i < N; i++)
+        {
+            dataSum[0][i] = vMax + data[0][i];
+            vMax = Math.max(vMax,dataSum[0][i]);
+        }
+
+        for (int i = 1; i < N; i++)
+        {
+            int vMaxHor = dataSum[i][0];
+            int vMaxVert = dataSum[0][1];
+            vMax = Math.max(vMaxHor, vMaxVert);
+            for (int j = 1; j < N; j++)
+            {
+                 dataSum[i][j] = vMax + data[i][j];
+                 vMaxVert = Math.max(vMaxVert, dataSum[i][j]);
+                 vMax = Math.max(vMaxHor, vMaxVert);
+            }
+        }
+
+
+        IO.println("---------------------------------------");
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
             {
